@@ -28,19 +28,19 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Tamnhi Vu and Samuel German</div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw1/index.html">cs184.eecs.berkeley.edu/sp25</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-einstein">cs184.eecs.berkeley.edu/sp25</a>
 
 		<figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
+			<figcaption>What did you say about my brothaaa! - Scar</figcaption>
 		</figure>
 
 		<!--
@@ -51,43 +51,98 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		a. I rasterized the triangle by creating boundaries as close to the triangle as possible. I did this by doing xmin, xmax, ymin, and ymax. I then created a double for loop to check each of my pixels and add 0.5 to get the middle of the pixel instead of the edge of a pixel. We then compute whether or not the current pixel we are on are within the edges of the triangle (all positive, all counter clockwise or all negative, clockwise) based on the if statement condition. I used the line equation given in lecture: Li(x, y) = –(x - Xi) dYi + (y - Yi) dXi to calculate each of the edges in order to see if my point lands within my triangle. 
-		b. My algorithm is no worse than one that checks each sample within the bounding box of the triangle because I make my boundaries as tight as possible with my xmin, xmax, ymin, and max. There is no reason to check a pixel outside of this boundary if it’s not near my image since there is no way it would be impossible to be in the triangle.
-
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		a. I rasterized the triangle by creating boundaries as close to the triangle as possible. I did this by doing xmin, xmax, ymin, and ymax. I then created a double for loop to check each of my pixels and add 0.5 to get the middle of the pixel instead of the edge of a pixel. We then compute whether or not the current pixel we are on are within the edges of the triangle (all positive, all counter clockwise or all negative, clockwise) based on the if statement condition. I used the line equation given in lecture: Li(x, y) = –(x - Xi) dYi + (y - Yi) dXi to calculate each of the edges in order to see if my point lands within my triangle. <br>
+		<br> b. My algorithm is no worse than one that checks each sample within the bounding box of the triangle because I make my boundaries as tight as possible with my xmin, xmax, ymin, and max. There is no reason to check a pixel outside of this boundary if it’s not near my image since there is no way it would be impossible to be in the triangle. <br>
+		<br> 	
+		<!--<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>-->
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task1.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1/basic3.png" width="400px"/>
+				  <figcaption>Tenebris the Dragon</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task1.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1/basic4.png" width="400px"/>
+				  <figcaption>The 5 Try-Angles</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task1.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1/basic5.png" width="400px"/>
+				  <figcaption>The Green Cube</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task1.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1/basic6.png" width="400px"/>
+				  <figcaption>Hexastar Flower</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<br>Our supersampling algorithm allows us to manipulate task 1 rasterize_triangle function to include another double for loop to loop through the sample rate. We were able to access subpixels based on the supersampling rate instead of just looking at a single sample pixel. For the data structure I was able to utilize a sample buffer which essentially stores colors at each subpixel before I average it for the overall final pixel. This way we can access the sample buffers and fill in the pixel depending if the sample point falls in the triangle using the edge_function where each subpixel is tested individually then stored in our sample buffer before we downsample in resolve_to_framebuffer.  <br>
+		<br>Supersampling is useful, so that we can more clear cut pictures with no jaggies and no gaps and essentially reduce aliasing. Modifications I made to the rasterization pipeline process increased my sample resolution, so that I don’t just use one single color per pixel, introduced a sample buffer to store my subpixels before averaging it to the final overall pixel, adjusted the rasterize_triangle to now iterate over subpixels too now instead of just one pixel, and finally we did downsampling where we averaged them to apply to the final overall pixel to allow smooth edges when we transition between the edges of the subpixels.  I used supersampling to antialias my triangles by increasing my supersample rate per pixel to close the gap and create a blurred effect to make the images have no jagged edges and smooth out the lines by allowing smooth transitions. <br>
+		<br>Overall, this effectively averages out the results by sampling more and multiple points for a single pixel by measuring the subpixels leading to better images with no gaps and jaggies. <br>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task2/basic4SR1.png" width="300px" style="padding: 0;"/>
+				  <figcaption>Sample Rate 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task2/basic4SR4.png" width="300px" style="padding: 0;"/>
+				  <figcaption>Sample Rate 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task2/basic4SR16.png" width="300px" style="padding: 0;"/>
+				  <figcaption>Sample Rate 16</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+
+		<br> These results are zoomed in a space where there is a gap in sample rate 1 since we will be able to look at an interesting point in the image. By observing this interesting point, we can see how antialiasing by supersampling closes that gap when we increase our sample rate and how the image gets clearer with finer lines (no jaggies) and no gap like we saw in sample rate 1. 
+
 
 		<h2>Task 3: Transforms</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<br> For this task, I wanted my cubeman to wave hi! I did this by rotating and transforming the upper right arm. <br>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task3/robot.png" width="400px" style="padding: 0;"/>
+				  <figcaption>Hello</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task3/robot_wave.png" width="400px" style="padding: 0;"/>
+				  <figcaption>World!</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
 
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<br>Barycentric coordinates allow me to interpolate across a triangle to average out the colors of 3 vertices of red, green, and blue. If the point is closer to a vertex, it would be a stronger shade of that vertex’s color. For example, if a point is closer to the red vertex and therefore appears a shade of red. This interpolation creates a smoothly blended transition of colors over a continuous space over discrete points. <br>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4/basic7triangle.png" width="400px" style="padding: 0;"/>
+				  <figcaption>Interpolated Triangle</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task4/basic7.png" width="400px" style="padding: 0;"/>
+				  <figcaption>Interpolated Circle</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -98,16 +153,7 @@
 		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+	
 		</div>
 	</body>
 </html>
