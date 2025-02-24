@@ -48,7 +48,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		At a high level, we learnhed how to make images with triangles and how to render images clearly using a variety of sampling methods. Since this was our first project for compouter graphics, it was a great introduction to all of the possibiltiies that we will soon learn!
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		a. I rasterized the triangle by creating boundaries as close to the triangle as possible. I did this by doing xmin, xmax, ymin, and ymax. I then created a double for loop to check each of my pixels and add 0.5 to get the middle of the pixel instead of the edge of a pixel. We then compute whether or not the current pixel we are on are within the edges of the triangle (all positive, all counter clockwise or all negative, clockwise) based on the if statement condition. I used the line equation given in lecture: Li(x, y) = –(x - Xi) dYi + (y - Yi) dXi to calculate each of the edges in order to see if my point lands within my triangle. <br>
