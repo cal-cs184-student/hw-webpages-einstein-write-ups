@@ -32,11 +32,11 @@
 
 		<br>
 
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw1/index.html">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw1/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw1/index.html</a>
 		
 		<br>
 
-		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-einstein">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-einstein">https://github.com/cal-cs184-student/sp25-hw1-einstein</a>
 
 		<figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
@@ -48,7 +48,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		At a high level, we learnhed how to make images with triangles and how to render images clearly using a variety of sampling methods. Since this was our first project for compouter graphics, it was a great introduction to all of the possibiltiies that we will soon learn!
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		a. I rasterized the triangle by creating boundaries as close to the triangle as possible. I did this by doing xmin, xmax, ymin, and ymax. I then created a double for loop to check each of my pixels and add 0.5 to get the middle of the pixel instead of the edge of a pixel. We then compute whether or not the current pixel we are on are within the edges of the triangle (all positive, all counter clockwise or all negative, clockwise) based on the if statement condition. I used the line equation given in lecture: Li(x, y) = –(x - Xi) dYi + (y - Yi) dXi to calculate each of the edges in order to see if my point lands within my triangle. <br>
@@ -145,13 +145,88 @@
 
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Pixel sampling is a process whereby the color of a pixel is determined as a function of a randomly sampled part of the pixel. In order to describe in more detail the methodology used to determine the color of a pixel, I will go into how  pixel sampling is implemented in our project. Here, pixel sampling is implemented by first setting up the triangle’s bounding box in order to determine the portion of the screen covered by the triangle: this involves computing the minimum and maximum values along its vertices in order to define its boundaries. Supersampling to reduce anti-aliasing is then performed; the process here is to  subdivide the pixels in the bounding box into a grid of subpixels, iterate over them, and then use line equation tests to test whether or not they are in the triangle (a pixel is in the triangle iff all three of the functions in the test are positive). Barycentric weights are then computed from the line equations according to the formulas from lecture 5, which are then interpolated from the vertices’ texture coordinates. For nearest neighbor sampling, the interpolated coordinates are clamped to the [0,1] range, multiplied by the texture dimensions, and then rounded to the nearest integer. For bilinear sampling, (u,v) sampling subtracts 0.5 from each coordinate to align with texel centers; the integer coordinates and then fractional parts are computed according to the formulas from lecture 5. Then the four neighboring levels are fetched. Finally, once the texture color is fetched it is written in the supersample buffer at the correct index. <br>
 
+		<br> 
+		After I first implemented task 5, supersampling wasn’t being performed, so I used chat-GPT to effectuate this. (My use of chat-GPT for code-writing consisted of me showing it the instructions for task 5 as well as the code I had so far which had rendered the images without supersampling; I used the snippet it had produced for specifically the supersampling part of task 5 in order to supersample correctly. I additionally used Chat-GPT to ask conceptual questions about how pixel sampling should be performed according to these methods, e.g. to ask "how is supersampling integrated with the nearest neighbors method in pixel sampling" and what I learned in this part is described in the previous paragraph). I realized that the problem was that I wasn’t directly iterating over the supersample grid upon seeing the correct version of the code; I thus learned that this is an integral part in the implementation of supersampling. <br>
+		<br> 
+		The following is an example for which bilinear sampling yields a definitively better image than nearest sampling. Comparing (the zoomed-in part of the) images of the same supersample rate, we can see that nearest sampling renders a sort of cross with a grey vertical line and white horizontal line around the center of the photo, whereas bilinear sampling has a much more continuous rendering of this grey line, in which it blends in a lot more with its background:
+
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5/nearest_sample_at_1_sample_per_pixel.png" width="400px" style="padding: 0;"/>
+				  <figcaption>nearest sampling at 1 sample per pixel</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5/nearest_sampling_at_16_samples_per_pixel.png" width="400px" style="padding: 0;"/>
+				  <figcaption>nearest sampling at 16 samples per pixel</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5/Bilinear_sampling_at_1_sample_per_pixel.png" width="400px" style="padding: 0;"/>
+				  <figcaption>bilinear sampling at 1 sample per pixel</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5/Bilinear_Sampling_at_16_samples_per_pixel.png" width="400px" style="padding: 0;"/>
+				  <figcaption>bilinear sampling at 16 samples per pixel</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+
+<br>
+<br>
+In general, in places with transitions, bilinear sampling will render it blurrier but more blended in with its background, whereas nearest sampling will look more discrete and blocky. The visual difference is due to the fact that bilinear sampling averages the value of a sampled pixel with the surrounding pixels (so a single pixel blends in more with its background as it is influenced more by what its background is) while nearest sampling uses the value of the closest pixel, so the color of a pixel is more determined by what it is happening immediately close to it, rather than its surrounding background.  
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Level sampling computes a texture from a mipmap, where its metric for selectign a texture is how much the texture is being scaled on screen. In order to into more detail as to what Level sampling is, I will describe our project's implementation for task 6. The implementation for task 6 starts by taking the derivates of the interpolated texture coordinates in the x and y directions according to the schema herefor escribed in lecture 6. We then scale the derivatives by the width and height of the full-resolution texture, which then gives us change in texel space such that the number of texels covered by a single pixel can now be computed; a continuous mipmap level is then obtained by taking the maximum of the magnitudes of these derivative vectors and taking their log base 2. This gives us the level of detail for a certain fragment, which is rounded to the nearest integer in the case of nearest-level sampling (level zero just uses 0 all the time for this).  In my workflow for this task, I used chat GPT after the changes weren’t significant enough when changing levels. I used ChatGPT here in the same way described as in task 5. Upon seeing its solution, I realized that I wasn't scaling the derivates by the width and height of the full resolution texture, in such a way that we were using the wrong texture map. Chat-GPT gave me the correct way to handle scaling texture coordinates, so I learned through it the concept that we mst use the change in texture coordinates to know how much area in texels the pixel computes. I also used Chat-GPT for conceptual help on understanding the differences between these methods, most notably in memory usage between the four combinations of level sampling and pixel sampling. I learmed from it how the mipmap chain is precomputated prior to selecting levels, meaning that the memory tradeof between these methods isn't significant.  <br>
 
-		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<br> As far as speed, memory, and anti-aliasing is concerned beteween the four combinations, L_ZERO and P_NEAREST would be the fastest due to the fact that it samples from full-resolution texture in the nearest neighbor interpolation method; because no additional mipmap level selection is performed, there is less computation and a lesser need to peroform memory acesses, which begets greater speed, but this comes at the sacrifice of poor antialiasing. Because L_ZERO and P_LINEAR uses the full-resolution level with bilinear interpolation, there is smoother transitions between texels and generally hjigher quality, though the process of interpolation involves more computation and thus this combination is relatively slower than the others. L_NEAREST and P_NEAREST has good anti aliasing due to the lower resolution midmap levels used which are prefiltered; yet computing the derivatives of the texture coordinatres due to L_NEAREST takes more time. The last combination, L_NEAREST and P_LINEAR, has the best anti-aliasing befcause it uses hoth mipmap selection and bilinear filtering. Bilinear interpolation and level selection involve heavy computations, such as in derivative compoutations for selecting levels. Yet the memory differences between levels isn't great, because the texture levels are already encoded into memory for each of these methods. 
+
+
+	
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6/L_zero_and_P_nearest.png" width="400px" style="padding: 0;"/>
+				  <figcaption>L_ZERO and P_NEAREST</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6/L_zero_P_linear.png" width="400px" style="padding: 0;"/>
+				  <figcaption>L_ZERO and P_LINEAR</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 50%; text-align: center; border-collapse: collapse; border-spacing: 0;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6/L_nearest_andP_nearest.png" width="400px" style="padding: 0;"/>
+				  <figcaption>L_NEAREST and P_NEAREST</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6/L_nearest_P_Linear.png" width="400px" style="padding: 0;"/>
+				  <figcaption>L_NEAREST and P_LINEAR</figcaption>
+				</td>
+				</tr>
+			</table>
+		</div>
+
+		
+	
 
 	
 		</div>
