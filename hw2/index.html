@@ -55,7 +55,7 @@
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		The Casteljau algorithm is a recursive method that allows me to implement the Bezier’s curve. At each iteration of the Castelijau, we were able to get a point on the Bezier curve. I implemented it so that it would evaluate the Bezier’s curves by doing linear interpolation between the two control points. 
+		The Casteljau algorithm is a recursive method that allows me to implement the Bezier’s curve. At each iteration of the Castelijau, we were able to get a point on the Bezier curve. I implemented it such that it would evaluate the Bezier’s curves by doing linear interpolation between the two control points. 
 
 		<div style = "text-align: center"> <p> <u> Here is an example with <b>6</b> control points: </u> </div>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -104,7 +104,7 @@
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		The Casteljau algorithm extends to Bezier surfaces by just applying the same recursive call, but on the parameters u and v. I implemented it in order to evaluate the Bezier surfaces by continuously evaluating on the point since we have multiple curves and then combining all the horizontal points and then interpolating it vertically by collapsing it all in 1D by evaluating the points until only one point remains being the point on the Bezier curve.
+		The Casteljau algorithm extends to Bezier surfaces by just applying the same recursive call, but on the parameters u and v. I implemented it in order to evaluate the Bezier surfaces by continuously evaluating on the point since we have multiple curves and then combining all the horizontal points and finally interpolating it vertically by collapsing it all in 1D by evaluating the points until only one point remains, the point on the Bezier curve.
 		
 		<div style = "text-align: center"> <p> <u>Here is an example of a Bezier surface: </u> </div>
 			<div style="display: flex; flex-direction: column; align-items: center;">
