@@ -138,7 +138,7 @@
 		
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		I was able to implement the area-weighted vertex normals by getting the half edges of a triangle by utilizing properties of a half edge and looping until I’ve grabbed all edges of a triangle. This allowed me to iterate through all of the faces of the object by repeatedly grabbing the neighbors positions . I was able to store the 3 vertex positions for every face and applied the cross product on the perpendicular edges to get the face normal where U then scaled this by the triangle’s area. I was able to calculate the weighted normals sum and normalized the final result which allowed me to get the shading of the images to appear smooth.
+		I was able to implement the area-weighted vertex normals by getting the half edges of a triangle by utilizing properties of a half edge and looping until I’ve grabbed all edges of a triangle. This allowed me to iterate through all of the faces of the object by repeatedly grabbing the neighbors positions . I was able to store the 3 vertex positions for every face and applied the cross product on the perpendicular edges to get the face normal where I then scaled this by the triangle’s area. I was able to calculate the weighted normals sum and normalized the final result which allowed me to get the shading of the images to appear smooth.
 		
 		<div style = "text-align: center"> <p> <u>Here is an example of area-weighted vetex normals to a teapot: </u> </div>
 			<div style="display: flex; flex-direction: column; align-items: center;">
