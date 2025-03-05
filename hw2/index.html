@@ -55,7 +55,7 @@
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		The Casteljau algorithm is a recursive method that allows me to implement the Bezier’s curve. At each iteration of the Castelijau, we were able to get a point on the Bezier curve. I implemented it such that it would evaluate the Bezier’s curves by doing linear interpolation between the two control points and finally returning the completed the Bezier curve when we finally get our single point.
+		The Casteljau algorithm is a recursive method that allows me to implement the Bezier’s curve. At each iteration of the Castelijau, we were able to get a point on the Bezier curve. I implemented it such that it would make a call to do one level/step of the Casteljau algorithm to give me the control points by doing linear interpolation between the two control points at each step. When we are given n control points, we can create a new vector of points due to linear interpolation. When our recursive process reaches our final remaining point, we can finally return the completed Bezier curve.
 
 		<div style = "text-align: center"> <p> <u> Here is an example with <b>6</b> control points: </u> </div>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -104,7 +104,7 @@
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		The Casteljau algorithm extends to Bezier surfaces by just applying the same recursive call, but on the parameters u and v. I implemented it in order to evaluate the Bezier surfaces by continuously evaluating on the point since we have multiple curves and then combining all the horizontal points and finally interpolating it vertically by collapsing it all in 1D. By evaluating the points until we only have one point remaining, this will give us the point on the Bezier curve.
+		The Casteljau algorithm extends to Bezier surfaces by just applying the same recursive call, but on the parameters u and v. I implemented it in order to evaluate the Bezier surfaces by combining all the horizontal points along each of the rows along the parameter u which gives me a vector of intermediate points and finally interpolating one more time vertically along the v parameter to get the final individual point. By evaluating and interpolating the points until we only have one point remaining, this will give us the point on the Bezier curve given the parameter u and v.
 		
 		<div style = "text-align: center"> <p> <u>Here is an example of a Bezier surface: </u> </div>
 			<div style="display: flex; flex-direction: column; align-items: center;">
@@ -126,7 +126,7 @@
 		
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		I was able to implement the area-weighted vertex normals by getting the half edges of a triangle by utilizing properties of a half edge and looping until I’ve grabbed all edges of a triangle. I was able to store all of the vertex positions and apply the cross product on the perpendicular edges. Then I was able to apply the area formula of a triangle (½ * base * height) to get the area and calculate the weighted sum. I repeatedly this by getting neighbors positions allowing images to become smooth.
+		I was able to implement the area-weighted vertex normals by getting the half edges of a triangle by utilizing properties of a half edge and looping until I’ve grabbed all edges of a triangle. This allowed me to iterate through all of the faces of the object by repeatedly grabbing the neighbors positions . I was able to store the 3 vertex positions for every face and applied the cross product on the perpendicular edges to get the face normal where U then scaled this by the triangle’s area. I was able to calculate the weighted normals sum and normalized the final result which allowed me to get the shading of the images to appear smooth.
 		
 		<div style = "text-align: center"> <p> <u>Here is an example of area-weighted vetex normals to a teapot: </u> </div>
 			<div style="display: flex; flex-direction: column; align-items: center;">
