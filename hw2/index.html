@@ -242,19 +242,32 @@ When I was first trying to implement part 6, I was stuck, so I asked chat-GPT fo
 					<td style="text-align: center;">
 					  <img src="task6/zwei.png" width="300px"/>
 					  <figcaption>Iteration 1</figcaption>
-                    <td style="text-align: center;">
-					  <img src="task6/drei.png" width="300px"/>
-					  <figcaption>Iteration 2</figcaption>
-					</td>
-                        <td style="text-align: center;">
-					  <img src="task6/for.png" width="300px"/>
-					  <figcaption>Iteration 3</figcaption>
-					</td>
-					
+                   
 				  </tr>
                     
 				</table>
 			</div>
+
+             <div style = "text-align: center"> <p> <u>Progression of Loop Subdivision Algorithm </u> </div>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="task6/drei.png" width="300px"/>
+					  <figcaption>Start</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="task6/for.png" width="300px"/>
+					  <figcaption>Iteration 1</figcaption>
+                   
+				  </tr>
+                    
+				</table>
+			</div>
+
+
+
+          
 By splitting, for every face, the edge which constitutes its diagonal, this assymetry can be handled. This error is occuring because a corner to this cube starts out with bordering one of its sides, and then having neigbors in a more concentrated area of it (namely, its front); not having its neighbors be uniformly distriuted as such, the sum of its neighbor's values included in the formula to compute a vertex's new position will be skewed in one direction. Now after we've split more edges and created more vertices, the specific parts where we've created vertices will be highly symmetrical, as the vertex lies on a smooth part of the cube to start out with, so its neighbors are more uniformly distributed around it. Then, as a result of more parts of the cube being smooth, the neighbors of the corner are more uniformly sampled about it than they would be had we not split edges, thus making the part of the cube corresponsding to where the corner formerly was, after the loop division algorithm has been applied many times, more symmetric due to its neighbors being more uniformly sampled around it. Here is an example after I've split edges as described. 
             <div style = "text-align: center"> <p> <u>Outcome after Prepocessing by Splitting Every Diagonal of a Side </u> </div>
 			<div style="display: flex; flex-direction: column; align-items: center;">
