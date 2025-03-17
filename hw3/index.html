@@ -32,8 +32,10 @@
 
 		<br>
 
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw3/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw3/index.html</a>
-		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw3-einstein3">https://github.com/cal-cs184-student/sp25-hw3-einstein3</a>
+		<div style = "text-align: center"> Link to webpage: 
+			<br> <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw3/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw3/index.html</a> </div>
+		<div style = "text-align: center"> Link to GitHub repository: 
+			<br> <a href="https://github.com/cal-cs184-student/sp25-hw3-einstein3">https://github.com/cal-cs184-student/sp25-hw3-einstein3</a> </div>
 		
 		<figure>
 			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
@@ -54,7 +56,7 @@
 		a high fixed bumber of samples per pixel. 
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		We should walk through the rendering pipeline and see that our first step is ray generation. 
+		Our first step in the rendering pipeline is ray generation.
 		This process allows us to generate the camera rays, used to determine what hits the scene, 
 		from the start of the camera's posirion and pass through a point on the image plane. We implement 
 		ray generation by converting the field of view, normalizing the sample coordinates, transforming the
@@ -63,33 +65,33 @@
 		looking for intersections with objects in the scene itself where we can check if and where a ray hits an object. 
 
 		<p>For our trinagle intersection algorithm, I implemented it using the Moller-Trumbore algorithm to see if the ray intersects
-			with a triangle which solves it using barycentric coordinates. We were abel to use the equation by computing the edges, 
+			with a triangle which solves it using barycentric coordinates. We were able to use the equation by computing the edges, 
 			taking the cross product which is perpendicuar to one of the edges and ray direction. By using the dot product we can solve 
-			for the intersecyion parameters by doing using the barycentric coordinates. Finally, we can udpdate our intersection information
-			by getting thenew closest intersection by interpolating the normal with barycentric weights. 
+			for the intersection parameters by doing using the barycentric coordinates. Finally, we can update our intersection information
+			by getting the new closest intersection by interpolating the normal with barycentric weights. 
 		</p>
 
-		<p> <b> <u> Here is an example 2x2 showing normal shading for small .dae files: </u> </b> </p>
+		<div style = "text-align: center"> <b> <u> Here is an example 2x2 showing normal shading for small .dae files: </u> </b> </div>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Part1/cube.png" width="400px"/>
-				  <figcaption>Cube</figcaption>
+				  <figcaption><b>Cube</b></figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Part1/banana.png" width="400px"/>
-				  <figcaption>Banana</figcaption>
+				  <figcaption><b>Banana</b></figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Part1/CBempty.png" width="400px"/>
-				  <figcaption>Empty Box</figcaption>
+				  <figcaption><b>Empty Box</b></figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Part1/CBspheres.png" width="400px"/>
-				  <figcaption>Box with Spheres</figcaption>
+				  <figcaption><b>Box with Spheres</b></figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -98,34 +100,33 @@
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
 		The BVH construction algorithm is a recursive algorithm that partitions the scene's promotives into boudning boxes to 
 		speed up the ray intersection tests. We first compute the bounding box, decide which axis to split on, partition the 
-		primitives, and recurse.
+		primitives, and recurse. I choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
+		distribution. Due to the fact that we split this way, we haev a balanced tree will overall lead to fewer recursive 
+		tests. 
 
-		<p>I choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
-			distribution. Due to the fact that we split this way, we haev a balanced tree will overall lead to fewer recursive 
-			tests. 
-		</p>
+		<p>
 
-		<p> <b> <u> Here is an example 2x2 showing normal shading for large .dae files: </u> </b> </p>
+		<div style = "text-align: center"> <b> <u> Here is an example 2x2 showing normal shading for large .dae files: </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Part2/cow.png" width="400px"/>
-				  <figcaption>Cow</figcaption>
+				  <figcaption><b>Cow</b></figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Part2/wall-e.png" width="400px"/>
-				  <figcaption>Wall-E</figcaption>
+				  <figcaption><b>Wall-E</b></figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Part2/CBlucy.png" width="400px"/>
-				  <figcaption>Lucy</figcaption>
+				  <figcaption><b>Lucy</b></figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Part2/maxplanck.png" width="400px"/>
-				  <figcaption>Maxplanck</figcaption>
+				  <figcaption><b>Maxplanck</b></figcaption>
 				</td>
 			  </tr>
 			</table>
