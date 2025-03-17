@@ -52,13 +52,13 @@
 		we are able to see where the rays intersect and use barycentric weights to get normal color shading. We then implement Bounding Volume
 		Hierarchy to speed up rendering of complex images, those that have a lot of geometrical complexities. We can do this by correctly choosing
 		the splitting point so that we are recursing at little as possible. We then implemented direct and global illuminance to showcase how we can replicate
-		how images rendered on our computer can reflect light like how it does in the real world. Lastly, we implement adaptive sampling to avoid probkems using 
+		how images rendered on our computer can reflect light like how it does in the real world. Lastly, we implement adaptive sampling to avoid problems using 
 		a high fixed bumber of samples per pixel. 
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		Our first step in the rendering pipeline is ray generation.
 		This process allows us to generate the camera rays, used to determine what hits the scene, 
-		from the start of the camera's posirion and pass through a point on the image plane. We implement 
+		from the start of the camera's position and pass through a point on the image plane. We implement 
 		ray generation by converting the field of view, normalizing the sample coordinates, transforming the
 		ray to the world space, and finally setting up the array by initializing our starting position and direction.
 		We lastly define our valid range for intersesctions for nClip and fClip. For our primitive intersection we are 
