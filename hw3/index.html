@@ -37,7 +37,7 @@
 		
 		<figure>
 			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
+			<figcaption>I'm late, I'm late, for a very important date! - White Rabbit from Alice in the Wonderland</figcaption>
 		</figure>
 
 		<!--
@@ -48,36 +48,91 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		We should walk through the rendering pipeline and see that our first step is ray generation. 
+		This process allows us to generate the camera rays, used to determine what hits the scene, 
+		from the start of the camera's posirion and pass through a point on the image plane. We implement 
+		ray generation by converting the field of view, normalizing the sample coordinates, transforming the
+		ray to the world space, and finally setting up the array by initializing our starting position and direction.
+		We lastly define our valid range for intersesctions for nClip and fClip. For our primitive intersection we are 
+		looking for intersections with objects in the scene itself where we can check if and where a ray hits an object. 
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p>For our trinagle intersection algorithm, I implemented it using the Moller-Trumbore algorithm to see if the ray intersects
+			with a trinagle which solves it using barycentric coordinates. We were abel to use the equation by computing the edges, 
+			taking the cross product which is perpendicuar to one of the edges and ray direction. By using the dot product we can solve 
+			for the intersecyion parameters by doing using the barycentric coordinates. Finally, we can udpdate our intersection information
+			by getting thenew closest intersection by interpolating the normal with barycentric weights. 
+		</p>
+
+		<p> <b> <u> Here is an example 2x2 showing normal shading for small .dae files: </u> </b> </p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="Part1/cube.png" width="400px"/>
+				  <figcaption>Cube</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="Part1/banana.png" width="400px"/>
+				  <figcaption>Banana</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="Part1/CBempty.png" width="400px"/>
+				  <figcaption>Empty Box</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="Part1/CBspheres.png" width="400px"/>
+				  <figcaption>Box with Spheres</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		The BVH construction algorithm is a recursive algorithm that partitions the scene's promotives into boudning boxes to 
+		speed up the ray intersection tests. We first compute the bounding box, decide which axis to split on, partition the 
+		primitives, and recurse.
+
+		<p>I choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
+			distribution. Due to the fact that we split this way, we haev a balanced tree will overall lead to fewer recursive 
+			tests. 
+		</p>
+
+		<p> <b> <u> Here is an example 2x2 showing normal shading for large .dae files: </u> </b> </p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part2/cow.png" width="400px"/>
+				  <figcaption>Cow</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part2/wall-e.png" width="400px"/>
+				  <figcaption>Wall-E</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part2/CBlucy.png" width="400px"/>
+				  <figcaption>Lucy</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part2/maxplanck.png" width="400px"/>
+				  <figcaption>Maxplanck</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
+
+		<p>After rendering images with and without BVH acceleration, I can see that having the BVH acceleration drastcially speeds
+			up the process to render the image. Lucy was able to render in less than a second with BVH acceleration while without BVH
+			acceleration, it took about 18 minutes to run due to the inefficient partitioning and unnexessary extra recurseive calls.
+			Instead of having it be a well-balanced bushy tree, without BVH acceleration, it is more like a left leaning skinny tree. 
+			I tested this on the different images like the cow and maxplank, which all run under 1 second. Even though these have 
+			differnt geometrical complexities, BVH is able to upper bound the rendering time to be less than a second regardless of
+			how long it took to render before BVH acceleration.</p>
 
 		<h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
