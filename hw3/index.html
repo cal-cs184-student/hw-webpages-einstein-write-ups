@@ -98,7 +98,7 @@
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		The BVH construction algorithm is a recursive algorithm that partitions the scene's promotives into boudning boxes to 
+		The BVH construction algorithm is a recursive algorithm that partitions the scene's primitives into bounding boxes to 
 		speed up the ray intersection tests. We first compute the bounding box, decide which axis to split on, partition the 
 		primitives, and recurse. I choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
 		distribution. Due to the fact that we split this way, we haev a balanced tree will overall lead to fewer recursive 
