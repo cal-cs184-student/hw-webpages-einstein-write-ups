@@ -28,12 +28,12 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 3 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Tamnhi Vu and Samuel German </div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: (TODO) <a href="file:///Users/tamnhi/cs184/hw-webpages-einstein-write-ups/hw3/index.html">file:///Users/tamnhi/cs184/hw-webpages-einstein-write-ups/hw3/index.html</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/sp25-hw3-einstein3">https://github.com/cal-cs184-student/sp25-hw3-einstein3</a>
 		
 		<figure>
 			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
@@ -45,7 +45,12 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this project, we displayed how images are being displayed depending on how the rays hit the scene. By utilizing important formulas,
+		we are able to see where the rays intersect and use barycentric weights to get normal color shading. We then implement Bounding Volume
+		Hierarchy to speed up rendering of complex images, those that have a lot of geometrical complexities. We can do this by correctly choosing
+		the splitting point so that we are recursing at little as possible. We then implemented direct and global illuminance to showcase how we can replicate
+		how images rendered on our computer can reflect light like how it does in the real world. Lastly, we implement adaptive sampling to avoid probkems using 
+		a high fixed bumber of samples per pixel. 
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		We should walk through the rendering pipeline and see that our first step is ray generation. 
@@ -57,7 +62,7 @@
 		looking for intersections with objects in the scene itself where we can check if and where a ray hits an object. 
 
 		<p>For our trinagle intersection algorithm, I implemented it using the Moller-Trumbore algorithm to see if the ray intersects
-			with a trinagle which solves it using barycentric coordinates. We were abel to use the equation by computing the edges, 
+			with a triangle which solves it using barycentric coordinates. We were abel to use the equation by computing the edges, 
 			taking the cross product which is perpendicuar to one of the edges and ray direction. By using the dot product we can solve 
 			for the intersecyion parameters by doing using the barycentric coordinates. Finally, we can udpdate our intersection information
 			by getting thenew closest intersection by interpolating the normal with barycentric weights. 
