@@ -56,15 +56,17 @@
 		a high fixed bumber of samples per pixel. 
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Our first step in the rendering pipeline is ray generation.
-		This process allows us to generate the camera rays, used to determine what hits the scene, 
-		from the start of the camera's position and pass through a point on the image plane. We implement 
-		ray generation by converting the field of view, normalizing the sample coordinates, transforming the
-		ray to the world space, and finally setting up the array by initializing our starting position and direction.
-		We lastly define our valid range for intersesctions for nClip and fClip. For our primitive intersection we are 
-		looking for intersections with objects in the scene itself where we can check if and where a ray hits an object. 
+		Our first step in the rendering pipeline is ray generation. This process allows us to generate the camera rays, used to determine what hits the scene, 
+		from the start of the camera's position and pass through a point on the image plane. We went from image spave to sensor in camera space and we were able
+		to outpit a ray in the world space. We transformed the coordinates to camera space, generate the ray in the camera space, which we were able to finally 
+		transform it into  the world space. We used ray generation by converting the field of view, normalizing the sample coordinates, transforming the
+		ray to the world space, and finally setting up the array by initializing our starting position and direction. We lastly define our valid range for
+		intersesctions for nClip and fClip. We were able to loop through the number of sample camera rays to trace them in order to average out the vector by using
+		Monte Carlo estimator to do random sampling to estimate the pixel radiance and to make images appear more realistic by simulating how light interacts with objects.
+		For our primitive intersection we are looking for intersections with objects in the scene itself where we can check if and where a ray hits an object by using the
+		ray equation r(t) = o + td.
 
-		<p>For our trinagle intersection algorithm, I implemented it using the Moller-Trumbore algorithm to see if the ray intersects
+		<p>For our triangle intersection algorithm, we implemented it using the Moller-Trumbore algorithm to see if the ray intersects
 			with a triangle which solves it using barycentric coordinates. We were able to use the equation by computing the edges, 
 			taking the cross product which is perpendicuar to one of the edges and ray direction. By using the dot product we can solve 
 			for the intersection parameters by doing using the barycentric coordinates. Finally, we can update our intersection information
@@ -100,8 +102,8 @@
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
 		The BVH construction algorithm is a recursive algorithm that partitions the scene's primitives into bounding boxes to 
 		speed up the ray intersection tests. We first compute the bounding box, decide which axis to split on, partition the 
-		primitives, and recurse. I choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
-		distribution. Due to the fact that we split this way, we haev a balanced tree will overall lead to fewer recursive 
+		primitives, and recurse. We choose the splitting heuristic by choosing the longest axis of the bounding box which allows more of an even
+		distribution. Due to the fact that we split this way, we have a balanced tree will overall lead to fewer recursive 
 		tests. 
 
 		<p>
@@ -133,13 +135,13 @@
 		</div>
 		
 
-		<p>After rendering images with and without BVH acceleration, I can see that having the BVH acceleration drastcially speeds
+		<p>After rendering images with and without BVH acceleration, we can see that having the BVH acceleration drastcially speeds
 			up the process to render the image. Lucy was able to render in less than a second with BVH acceleration while without BVH
 			acceleration, it took about 18 minutes to run due to the inefficient partitioning and unnecessary extra recurseive calls. 
 			Though the cow is not as complex, we can see that it took about 3 minutes with my implementation before the BVH acceleration, 
 			but ended up being less than one second after the BVH acceleration. 
 			Instead of having it be a well-balanced bushy tree, without BVH acceleration, it is more like a left leaning skinny tree. 
-			I tested this on the different images like the blob and wall-e, which all run under 1 second. Even though these have 
+			we tested this on the different images like the blob and wall-e, which all run under 1 second. Even though these have 
 			different geometrical complexities, BVH is able to upper bound the rendering time to be less than a second regardless of
 			how long it took to render before BVH acceleration.</p>
 
