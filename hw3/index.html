@@ -162,6 +162,11 @@
 				  <img src="dragon_64_32.png" width="400px"/>
 				  <figcaption><b>Importance Sampling</b></figcaption>
 				</td>
+				<td style="text-align: center;">
+				  <img src="final.png" width="400px"/>
+				  <figcaption><b>Uiform Hemisphere Sampling</b></figcaption>
+				</td>
+			  </tr>
 
 </tr>
 			</table>
@@ -185,6 +190,7 @@
 				
 			</table>
 		</div>
+
 
 		<p>The two above picutures were produced with the same parameters, except inasmuch as their lighting sampling method is concerned. The chief difference between them is that in Uniform Hemisphere Sampling, there is more noise in shadow regions. For example, one can look in the top corners of each of the pictures, in which there is shadows, and see grainniness and black dots there in the picture rendered using Uniform Hemisphere Sampling, whereas the same area is quite smooth and bereft of such speckles in the rendition using Importance Sampling. Another area in which this type of difference is notable is the shadow of the bunny -- the transition between different brightness levels in that shadow, using Importance Sampling, is quite smooth to the grainner and more rough transition in that area using Uniform Hemisphere Sampling. The inferior quality in Hemisphere Sampling can be ascribed to how it samples directions uniformly, and not guided by where the lights actually are, meaning that many samples don't hit lights; whereas Importance Sampling takes the positions of the lights into account when sampling directions. 
 
