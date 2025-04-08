@@ -28,19 +28,19 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 4 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Tamnhi Vu and Samuel German </div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html</a>
 
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw4-einstein4">https://github.com/cal-cs184-student/sp25-hw4-einstein4</a>
 
 		<figure>
 			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
+			<figcaption>Boo! I'm a ghost!</figcaption>
 		</figure>
 
 		<!--
@@ -80,7 +80,85 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p> When modifying the spring constant (ks), I noticed that the cloth was very loose and lost it's structure when I decreased the spring constant to be 1. This made the cloth look as if it were a jelly material compared to the default value.
+			When I increase the spring constant to 50000, the piece of cloth does not droop down as much, resisting the stretch of the pinned corners. Instead the cloth becomes much less floppy and looks more smooth since it has less wrinkles/folds on the cloth. The material almost looks like a leather type of material since the shape is held tightly. </p>
+		<p> When modifying the denisty, I noticed that the cloth was flying around and moving very quickly around itself since it was pinned to the 2 corners when I decreased the density to 0.1. This reminded me of like a pinwheel being moved by wind, so since the density of the cloth is low, the cloth becomes light and reacts quickly compared to the default density.
+			When I increase the density 1500, starts to sag since the swoop of the cloth lowers down due to the heaviness of the cloth. The fabric starts to move more as well since it looks like the springs are struggling to hold the weight of the cloth.  </p>
+		<p> When modifying the damping, I noticed that the cloth fell very quicly when I decreased the damping to 0%. It fell so quicly that it used momentum and swung the cloth all the way back just like a swing on a playground. 
+			When I increase the damping to 1%, it takes about 4x as long to reach the resting state. I provided an image at what the cloth looks like at 6 seconds with 1% damping since the default value (0.2%) would reach the final resting state at 6 seconds. 
+		</p>
+		<div style = "text-align: center"> <b> <u> ks: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="Part2/low_ks.png" width="250px"/>
+					<figcaption>Low ks</figcaption>
+				  </td>
+				  <td style="text-align: center;">
+					<img src="Part2/default.png" width="250px"/>
+					<figcaption>Default ks</figcaption>
+				  </td>
+				  <td style="text-align: center;">
+					  <img src="Part2/high_ks.png" width="250px"/>
+					  <figcaption>High ks</figcaption>
+					</td>
+			  </tr>
+			</table>
+		</div>
+		<div style = "text-align: center"> <b> <u> density: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+		 <table>
+		   <tr>
+			<td style="text-align: center;">
+			  <img src="Part2/low_density.png" width="250px"/>
+			  <figcaption>Low density</figcaption>
+			</td>
+			<td style="text-align: center;">
+			  <img src="Part2/default.png" width="250px"/>
+			  <figcaption>Default density</figcaption>
+			</td>
+			<td style="text-align: center;">
+				<img src="Part2/high_density.png" width="250px"/>
+				<figcaption>High density</figcaption>
+			  </td>
+		   </tr>
+		  </table>
+		  <div style = "text-align: center"> <b> <u> damping at 6 seconds: </u> </b> </div>
+		  <div style="display: flex; flex-direction: column; align-items: center;">
+		  <table>
+		   <tr>
+			<td style="text-align: center;">
+				<img src="Part2/low_damping.png" width="250px"/>
+				<figcaption>Low damping</figcaption>
+			  </td>
+			  <td style="text-align: center;">
+				<img src="Part2/default.png" width="250px"/>
+				<figcaption>Default damping</figcaption>
+			  </td>
+			  <td style="text-align: center;">
+				  <img src="Part2/high_damping.png" width="250px"/>
+				  <figcaption>High Damping</figcaption>
+				</td>
+			 </tr>
+			</table>
+		</div>
+
+		<div style = "text-align: center"> <b> <u> Pinned 4: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part2/Resting_POV1.png" width="400px"/>
+				  <figcaption>POV1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part2/Resting_POV2.png" width="400px"/>
+				  <figcaption>POV2</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
