@@ -32,16 +32,17 @@
 
 		<br>
 
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html</a>
+		<div style = "text-align: center"> Link to webpage: 
+			<br> <a href="https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html">https://cal-cs184-student.github.io/hw-webpages-einstein-write-ups/hw4/index.html</a> </div>
 
-		<br>
-
-		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw4-einstein4">https://github.com/cal-cs184-student/sp25-hw4-einstein4</a>
+		<div style = "text-align: center"> Link to GitHub repository: 
+			<br> <a href="https://github.com/cal-cs184-student/sp25-hw4-einstein4">https://github.com/cal-cs184-student/sp25-hw4-einstein4</a> </div>
 
 		<figure>
 			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
 			<figcaption>Boo! I'm a ghost!</figcaption>
 		</figure>
+
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -106,6 +107,7 @@
 			  </tr>
 			</table>
 		</div>
+		<p></p>
 		<div style = "text-align: center"> <b> <u> density: </u> </b> </div>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 		 <table>
@@ -124,6 +126,7 @@
 			  </td>
 		   </tr>
 		  </table>
+		  <p></p>
 		  <div style = "text-align: center"> <b> <u> damping at 6 seconds: </u> </b> </div>
 		  <div style="display: flex; flex-direction: column; align-items: center;">
 		  <table>
@@ -143,18 +146,18 @@
 			 </tr>
 			</table>
 		</div>
-
+		<p></p>
 		<div style = "text-align: center"> <b> <u> Pinned 4: </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Part2/Resting_POV1.png" width="400px"/>
-				  <figcaption>POV1</figcaption>
+				  <figcaption>POV 1</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Part2/Resting_POV2.png" width="400px"/>
-				  <figcaption>POV2</figcaption>
+				  <figcaption>POV 2</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -167,21 +170,153 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 5: Shaders</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		<p>
+			A shader program is made up of different shaders such as our vertex shader and fragment shader which allows us to visualize and model how our 3D objects look like. 
+			The vertext and fragment shaders work together to create lighting and material effects since the vertex shader handle the geometry properties like the position and shape while the fragment shader determines the color of the pixel.
+		</p>
+		<p> 
+			Blinn-Phong shading model allows us to showcase how lights interacts with an object with ambient lighting, diffuse reflection, and specular highlights. When all these componenets are combined together, it creates Phong relection since the ambient light allows us to represent the indirect light that gets illuminated on the object, the diffuse reflection allows how the light bounces off the surface, and the specular highlights represent the shinniness of an object. 
+		</p>
+		<div style = "text-align: center"> <b> <u> Blinn-Phong Shading: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+				<tr>
+					<td style="text-align: center;">
+					  <img src="Part5/bp_a.png" width="400px"/>
+					  <figcaption>Only outputting the ambient component</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/bp_d.png" width="400px"/>
+					  <figcaption>Only outputting the diffuse component</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="Part5/bp_s.png" width="400px"/>
+					  <figcaption>Only outputting the specular component</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/bp.png" width="400px"/>
+					  <figcaption>Entire Bling-Phong model</figcaption>
+					</td>
+				  </tr>
+			</table>
 		</div>
+		<p></p>
+
+			<p>
+				For bump and displacement mapping, we had to use Blinn-Phong for both and in fact, the fragment shaders are the exact same. 
+				The only difference is in the vertex file where vertx shader for displacement mapping uses (p + n * h(u, v) * k_h) for the position. 
+				Since we changes the vertex shader for the displacement mapping, this affects the shape and position.
+			</p>
+		<div style = "text-align: center"> <b> <u> Bump Mapping: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+				<tr>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_1.png" width="400px"/>
+					  <figcaption>Sphere</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_2.png" width="400px"/>
+					  <figcaption>Top View of clothsim</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_3.png" width="400px"/>
+					  <figcaption>Bottom View of Cloth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_4.png" width="400px"/>
+					  <figcaption>Cloth on Sphere</figcaption>
+					</td>
+				  </tr>
+			 </table>
+			</div>
+			<div style = "text-align: center"> <b> <u> Displacement Mapping: </u> </b> </div> 
+			<div style="display: flex; flex-direction: column; align-items: center;">
+			 <table>
+				<tr>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_1.png" width="400px"/>
+					  <figcaption>Sphere</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_2.png" width="400px"/>
+					  <figcaption>Top View of Cloth.</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_3.png" width="400px"/>
+					  <figcaption>Bottom View of Cloth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_4.png" width="400px"/>
+					  <figcaption>CLoth on Sphere</figcaption>
+					</td>
+				  </tr>
+			  </table>
+		</div>
+
+		<p>
+			For bump mapping, there is no difference in the sphere between changing the sphere's mesh coarseness since in the vertex file, we only use the surface normals.
+			For displacement mapping, there is a difference when the mesh coarseness is set to 16 since it looks more deformed and jagged while when the mesh 
+			coarseness is set to 128, it is more smooth. This is because in the vertex shader file, we are dependent on height scaling factor for the position and since we we edited the vertex shader for displacement mapping, the geometries are affecting the sphere when we adjust the mesh's coarseness.
+		</p>
+		<div style = "text-align: center"> <b> <u> Mesh Coarseness: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+				<tr>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_16_s.png" width="400px"/>
+					  <figcaption>Bump with 16 mesh coarseness</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/bump_128_s.png" width="400px"/>
+					  <figcaption>Bump with 128 mesh coarseness</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_16_s.png" width="400px"/>
+					  <figcaption>Displacement with 16 mesh coarseness</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/displacement_128_s.png" width="400px"/>
+					  <figcaption>Displacement with 128 mesh coarseness</figcaption>
+					</td>
+				  </tr>
+			</table>
+		</div>
+
+		<div style = "text-align: center"> <b> <u> Mirror Mapping: </u> </b> </div> 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+				<tr>
+					<td style="text-align: center;">
+					  <img src="Part5/mirror_1.png" width="400px"/>
+					  <figcaption>Sphere</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/mirror_2.png" width="400px"/>
+					  <figcaption>Top POV of Cloth</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="Part5/mirror_3.png" width="400px"/>
+					  <figcaption>Bottom POV of Cloth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="Part5/mirror_4.png" width="400px"/>
+					  <figcaption>Cloth on Sphere</figcaption>
+					</td>
+				  </tr>
+			</table>
+		</div>
+
+
 	</body>
 </html>
