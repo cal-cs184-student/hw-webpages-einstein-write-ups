@@ -147,27 +147,324 @@
 			how long it took to render before BVH acceleration.</p>
 
 		<h2>Part 3: Direct Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For uniform hemisphere sampling in estimate_direct_lighting_hemisphere, the first step in the implementation is to construct a system of coordinates that ensures the surface normal points along the Z axis in the system we’ve constructed. We then draw num_samples random directions, where each direction has probability 1/2pi of being sampled. For a sampled direction, we create a shadow ray, which is offset by an epsilon to avoid intersecting itself, and if the ray misses all of our geometrical structures, we add environment light; otherwise, if the hit surface is emissive we add that emission to the shadow ray. After this, we multiply by the BSDFs, multiply by cos(theta), and then divide by by the aforementioned probability (1 / 2pi). We then take a monte carlo average, summing the samples and then dividing by num_samples.
+
+		<p>For importance sampling in estimate_direct_lighting_importance, the first thing done is to iterate over each light; for each light, we first determine how may samples we need for it (1 if it is a point light, ns_area_light otherwise); we then sample the light using a sampling function, which gets a direction from the surface to a point on the light, as well as the pdf and radiance of this point. We then cast a shadow light in the opposite direction of this sample, and if the light isn’t blocked (which we check by seeing whether it is geometry cis at least as far as distToLight), we multiply by the BSDF, and the cosine dot product multiplied by the surface normal, and divide by the pdf. Then, we average the samples we got for the light, and add the average to the total light for the surface. <p>
+
+			<p>
+
+				
+			<div style = "text-align: center"> <b> <u> Examples: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="dragon_64_32.png" width="400px"/>
+				  <figcaption><b>Importance Sampling</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="final.png" width="400px"/>
+				  <figcaption><b>Uiform Hemisphere Sampling</b></figcaption>
+				</td>
+			  </tr>
+
+</tr>
+			</table>
+		</div>
+			<p>
+
+		<div style = "text-align: center"> <b> <u>  </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Hemisphere_Example.png" width="400px"/>
+				  <figcaption><b>Uniform Hemisphere Sampling</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Importance_Example.png" width="400px"/>
+				  <figcaption><b>Importance Sampling</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				
+			</table>
+		</div>
+
+
+		<p>The two above picutures were produced with the same parameters, except inasmuch as their lighting sampling method is concerned. The chief difference between them is that in Uniform Hemisphere Sampling, there is more noise in shadow regions. For example, one can look in the top corners of each of the pictures, in which there is shadows, and see grainniness and black dots there in the picture rendered using Uniform Hemisphere Sampling, whereas the same area is quite smooth and bereft of such speckles in the rendition using Importance Sampling. Another area in which this type of difference is notable is the shadow of the bunny -- the transition between different brightness levels in that shadow, using Importance Sampling, is quite smooth to the grainner and more rough transition in that area using Uniform Hemisphere Sampling. The inferior quality in Hemisphere Sampling can be ascribed to how it samples directions uniformly, and not guided by where the lights actually are, meaning that many samples don't hit lights; whereas Importance Sampling takes the positions of the lights into account when sampling directions. 
+
+
+			<div style = "text-align: center"> <b> <u> Importance (Lighting) Sampling: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="1light.png" width="400px"/>
+				  <figcaption><b>1 Light Ray</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="4light.png" width="400px"/>
+				  <figcaption><b>4 Light Rays</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="16light.png" width="400px"/>
+				  <figcaption><b>16 Light Rays</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="64light.png" width="400px"/>
+				  <figcaption><b>64 Light Rays</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+		We can see the graininess decrease as we increase the number of light samples. With a smaller number of samples, we are sampling less of the surface, creating more variance. The more samples we take, the closer the average becomes to the true light contribution. 
+
+		<p>
+			For this part, when I first finished my implementation, the rendering for a sample rate of 1 using importance sampling was far too noisy, so I used chat-GPT to implement this section in the hopes of improving this, showing it the instructions for this part. It's changes helped but did not fix this issue, but they did massively improve my implementation -- I originally didn't have the surface normal pointing along the Z-axis of thw coordinate system, which simplified many calculations, as for example the cosine of the angle between the sampled direction and the normal is the z-comonent of that direction.
+
+
 
 		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		The indirect lighting function is implemented by first having a base case in the case of the depth (m- value) being 0, in which case the function returns 0. Then, we build our own coordinate system such that the surface normal is (0,0,1) in it. From this point onwards, the schema is to either add lighting at every bounce if isAccumBounces is true, or only add lighting at the final bounce when the depth is 1, given that isAccumBounces is false. We sample a new direction from the bsdf sample function, which in turn samples a new direction with probability cos(theta)/pi, and calculates the bsdf by computing the reflectance over pi.  We then compute the z component of w_in by taking the cosine of the angle between the direction sampled and the surface normal. We then create a bounce ray in world space offset by a small epsilon to avoid self-intersections. And at each bounce whose depth is less than the original, we terminate with a certain probability in Russian Roulette; if we terminate, we end and use the ray’s direct contribution; otherwise, we go on and scale the ray’s contribution by 1/(1 - ,probability of terminating>), to avoid bias to the estimator. In this case, we also intersect the ray with the scene and if we hit some geometric figure, we recursively call this lighting function to get the lighting from this point itself, and we sample the environment in the case of a miss. We then return the radiance multiplied by the BSDF value, the cosine term, and divide by the pdf (as well as apply the potential scaling from Russian Roulette). At last, we return the sum of the direct lighting added to the (potentially scaled) indirect contributions from further bounces. 
+		<p>
+			<div style = "text-align: center"> <b> <u> Some examples with direct and indirect illumination </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_another_direct_example.png" width="400px"/>
+				  <figcaption><b>direct</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_another_indirect_example.png" width="400px"/>
+				  <figcaption><b>indirect</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_pick_one_only_direct.png" width="400px"/>
+				  <figcaption><b>direct</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_pick_one_only_indirect.png" width="400px"/>
+				  <figcaption><b>indirect</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+<p>
+	As is demonstrated in the last 2 examples of the same image, indirect lighting has better color bleeding and brightness due to how light bounces off of multiple surfaces, giving more light to certain places. 
+
+	<p>
+			<div style = "text-align: center"> <b> <u> Different m values with isAccumBounces = false </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m0_noaccum_norus.png" width="400px"/>
+				  <figcaption><b>m = 0</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m1_noaccum_norus.png" width="400px"/>
+				  <figcaption><b>m = 1</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m2_noaccum_norus.png" width="400px"/>
+				  <figcaption><b>m = 2</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m3_noaccum_norus.png" width="400px"/>
+				  <figcaption><b>m = 3</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m4_noaccum_norus.png" width="400px"/>
+				  <figcaption><b>m = 4</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m5_noaccum_norus.png" width="400px"/>
+				  <figcaption><b> m =5</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+<p>
+	In the 2nd and 3rd bounce of light, we see a progressive darkening, with the third bounce being darker than the second. with isAccumBounces = false, we don't have multiple bounces acumulating more light; we just take into account the final (diminished) contribution after the light has bounced some times; it bounces more times with m = 3 than with m = 2, hence the darker quality. Compared to rasterization, some areas are illumonated when they weren't before due to the multi-bounce from lights hitting other surfaces; but the image is dimmer than rasterization at this point. 
+		<p>
+			<div style = "text-align: center"> <b> <u> Different m values with isAccumBounces = true </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m0_accum_norus.png" width="400px"/>
+				  <figcaption><b>m = 0</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m1_accum_norus.png" width="400px"/>
+				  <figcaption><b>m = 1</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m2_accum_norus.png" width="400px"/>
+				  <figcaption><b>m = 2</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m3_accum_norus.png" width="400px"/>
+				  <figcaption><b>m = 3</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m4_accum_norus.png" width="400px"/>
+				  <figcaption><b>m = 4</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m5_accum_norus.png" width="400px"/>
+				  <figcaption><b> m =5</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			<div style = "text-align: center"> <b> <u> Russian Roulette examples</u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m0_noaccum_rus.png" width="400px"/>
+				  <figcaption><b>m = 0, isAccumBounces = false</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m1_noaccum_rus.png" width="400px"/>
+				  <figcaption><b>m = 1, isAccumBounces = false</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m2_noaccum_rus.png" width="400px"/>
+				  <figcaption><b>m = 2, isAccumBounces = false</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m3_noaccum_rus.png" width="400px"/>
+				  <figcaption><b>m = 3, isAccumBounces = false</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_m4_noaccum_rus.png" width="400px"/>
+				  <figcaption><b>m = 4, isAccumBounces = false</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_m100_accum_rus.png" width="400px"/>
+				  <figcaption><b> m = 100, isAccumBounces = true</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+<p>
+<div style = "text-align: center"> <b> <u> Different Sampling Rates </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_1.png" width="400px"/>
+				  <figcaption><b>s = 1</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_2.png" width="400px"/>
+				  <figcaption><b>s = 2</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_4.png" width="400px"/>
+				  <figcaption><b>s = 4</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_8.png" width="400px"/>
+				  <figcaption><b>s = 8</b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_16.png" width="400px"/>
+				  <figcaption><b> s = 16</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_64.png" width="400px"/>
+				  <figcaption><b> s = 64</b></figcaption>
+				</td>
+			  </tr>
+			    <tr>
+				<td style="text-align: center;">
+				  <img src="writeup_differentsample_1024.png" width="400px"/>
+				  <figcaption><b>s = 1024</b></figcaption>
+				</td>
+				
+			  </tr>
+			</table>
+		</div>
+
+		<p> 
+
+The comparison shows the dimunation in graniness and smoother quality seen upon increaing the sample rate. 
+<p>
+	For this part, as I was having trouble seeing chages when changing the m-value at first, I used chat gpt to implement it, showing the instructions for this to it. Upon seeing its output, I learned that i wasn't adding light contributions in the right places -- I was adding the first light contribution before I had multiplied it by cosine and divided by the pdf. I learend form chat-gpt that thisis necessary to make the light sample commensurate to take into account the direction of the light, as well as weight it by the probability of sampling that direction. 
+
 
 		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		The idea behind adaptive sampling is to take fewer samples in areas of an image that converge quickly, thereby slowing down the rendering time. The idea is to use the variance in a batch of samples to measure how stable a pixel’s color is, and if the color is deemed stable, we cease sampling more in that area. The implementation works by, for each sample of a pixel, computing its illuminance. We add this illuminance to a sum, and add this square to another sum. We then use these to compute the mean and variance, We then compute the mean by dividing the sum by the number of samples, and compute the variance using the variance formula, where the sum of the squares informs us as to the mean of the square of the illumination. Then, we use our calculations to calculate the confidence interva width in I, and check whether we converged appropriately by seeing whether or not I <= max-tolerance * mu. In the case of converging, we stop sampling and compute the average color of the pixel samples we have done thus far. 
+		<p>
+			<div style = "text-align: center"> <b> <u> Picture and Sampling Rate Image for CBbunny: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="test.png" width="400px"/>
+				  <figcaption><b></b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="test_rate.png" width="400px"/>
+				  <figcaption><b></b></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+			  	</table>
 		</div>
+
+		<p>
+
+			<div style = "text-align: center"> <b> <u> Picture and Sampling Rate Image for CBspheres: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+
+				<td style="text-align: center;">
+				  <img src="part5writeup.png" width="400px"/>
+				  <figcaption><b>Empty Box</b></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="part5writeup_rate.png" width="400px"/>
+				  <figcaption><b>Box with Spheres</b></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
+<p>
+
+When I first implemented part 5, I didn't see a green area around the area light at the top, so I used chat-gpt to implement this, in the hopes of seeing whether anything was wrong. The changes it made didn't fix the issue; upon further debugging, I realized that the problem was my Russian Roulette probability, which I then picked approrpriately to ensure that the rate image I was getting matched that shown in the spec. 
+		
 	</body>
 </html>
