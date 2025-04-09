@@ -212,6 +212,25 @@
 		</div>
 		<p></p>
 
+		<div style = "text-align: center"> <b> <u> Texture Mapping: </u> </b> </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+		 <table>
+		   <tr>
+			<td style="text-align: center;">
+			  <img src="Part5/texture_3.png" width="250px"/>
+			  <figcaption>POV 1</figcaption>
+			</td>
+			<td style="text-align: center;">
+			  <img src="Part5/texture_1.png" width="250px"/>
+			  <figcaption>POV 2</figcaption>
+			</td>
+			<td style="text-align: center;">
+				<img src="Part5/texture_2.png" width="250px"/>
+				<figcaption>POV 3</figcaption>
+			  </td>
+		   </tr>
+		  </table>
+
 			<p>
 				For bump and displacement mapping, we had to use Blinn-Phong for both and in fact, the fragment shaders are the exact same. 
 				The only difference is in the vertex file where vertx shader for displacement mapping uses (p + n * h(u, v) * k_h) for the position. 
