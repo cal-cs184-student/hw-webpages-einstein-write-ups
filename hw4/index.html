@@ -177,8 +177,10 @@
 
 		<h2>Part 5: Shaders</h2>
 		<p>
-			A shader program is made up of different shaders such as our vertex shader and fragment shader which allows us to visualize and model how our 3D objects look like. 
-			The vertex and fragment shaders work together to create lighting and material effects since the vertex shader handle the vertcies of an object like the geometry properties like the position and shape  while the fragment shader determines the fill color of the pixel.
+			A shader program is made up of different shaders such as our vertex shader and fragment shader which allows us to visualize and model how our 3D objects look like. It handles transforming vertex position from world space to camera space.
+			The vertex and fragment shaders work together to create lighting and material effects since the vertex shader calculates the geometry and data needed to pass to the fragment shader to figure out the color of each pixel.
+			The vertex shader handle the vertices of an object to define the position and shape while the fragment shader determines the fill color of the pixel by seeing how the normals affect the light.
+			Vertex shaders affects the geometry of a shape since it deeends on the vertice position while the fragment shader relies on normals passed in from the vertex shader.
 		</p>
 		<p> 
 			Blinn-Phong shading model allows us to showcase how lights interacts with an object with ambient lighting, diffuse reflection, and specular highlights. When all these componenets are combined together, it creates Phong relection since the ambient light allows us to represent the indirect light that gets illuminated on the object, the diffuse reflection allows how the light bounces off the surface, and the specular highlights represent the shinniness of an object. 
@@ -214,7 +216,7 @@
 				For bump and displacement mapping, we had to use Blinn-Phong for both and in fact, the fragment shaders are the exact same. 
 				The only difference is in the vertex file where vertx shader for displacement mapping uses (p + n * h(u, v) * k_h) for the position. 
 				Since we changes the vertex shader for the displacement mapping, this affects the shape and position. For bump mapping, we can see 
-				the surafce is a lot very smooth especialy in the cicle, but for displacement there is some craters and does not give a smooth circle appearance. 
+				the surface is a lot very smooth especially in the circle, but for displacement there is some craters and does not give a smooth circle appearance. 
 			</p>
 		<div style = "text-align: center"> <b> <u> Bump Mapping: </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -268,7 +270,8 @@
 		</div>
 
 		<p>
-			For bump mapping, there is no difference in the sphere between changing the sphere's mesh coarseness since in the vertex file, we only use the surface normals.
+			For bump mapping, there is no difference in the sphere between changing the sphere's mesh coarseness since in the vertex file, we only use the surface normals while the displacement mapping uses the vertex positions.
+			The bump mapping alters the normals and the displacement ampping affects the vertex position so the number of vertices will impact the smoothness of the object.
 			For displacement mapping, there is a difference when the mesh coarseness is set to 16 since it looks more deformed and jagged while when the mesh 
 			coarseness is set to 128, it is more smooth. This is because in the vertex shader file, we are dependent on height scaling factor for the position and since we we edited the vertex shader for displacement mapping, 
 			the geometries are affecting the sphere when we adjust the mesh's coarseness. In 128 it looks smoother than 16 since 128 has more vertices to work with than 16 giving 16 a more blocky appearance. 
