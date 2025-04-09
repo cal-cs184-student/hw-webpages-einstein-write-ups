@@ -52,7 +52,7 @@
 		In this homework, we were able to simulate how a piece of cloth would react in real life by applying physics into our simulation. 
 		We had to first understand how the masses and springs work for models and how the cloth would react if it's pinned in 2 corners or 4 corners. 
 		Afterwards, we were able to handle collisions where the cloth would fall on the sphere. We were able to showcase how the cloth lie on the sphere and what it would look like. 
-		Moreover, we tested how the cloth would react if collided on itself and how it would fold on itself. In this implementation, we had to be caredul for clipping!
+		Moreover, we tested how the cloth would react if collided on itself and how it would fold on itself. In this implementation, we had to be careful for clipping!
 		Lastly, we were able to deal with shaders and set the appearance to be have different shading, mapping, or to have a reflection!
 		Overall, this homework really showed us how animated films are able to display things such as hair so realistically. By adjusting attributes, height, normals, and shaders, we
 		are able to get a different result that we want.
@@ -178,7 +178,7 @@
 		<h2>Part 5: Shaders</h2>
 		<p>
 			A shader program is made up of different shaders such as our vertex shader and fragment shader which allows us to visualize and model how our 3D objects look like. 
-			The vertext and fragment shaders work together to create lighting and material effects since the vertex shader handle the geometry properties like the position and shape while the fragment shader determines the color of the pixel.
+			The vertex and fragment shaders work together to create lighting and material effects since the vertex shader handle the vertcies of an object like the geometry properties like the position and shape  while the fragment shader determines the fill color of the pixel.
 		</p>
 		<p> 
 			Blinn-Phong shading model allows us to showcase how lights interacts with an object with ambient lighting, diffuse reflection, and specular highlights. When all these componenets are combined together, it creates Phong relection since the ambient light allows us to represent the indirect light that gets illuminated on the object, the diffuse reflection allows how the light bounces off the surface, and the specular highlights represent the shinniness of an object. 
@@ -213,7 +213,8 @@
 			<p>
 				For bump and displacement mapping, we had to use Blinn-Phong for both and in fact, the fragment shaders are the exact same. 
 				The only difference is in the vertex file where vertx shader for displacement mapping uses (p + n * h(u, v) * k_h) for the position. 
-				Since we changes the vertex shader for the displacement mapping, this affects the shape and position.
+				Since we changes the vertex shader for the displacement mapping, this affects the shape and position. For bump mapping, we can see 
+				the surafce is a lot very smooth especialy in the cicle, but for displacement there is some craters and does not give a smooth circle appearance. 
 			</p>
 		<div style = "text-align: center"> <b> <u> Bump Mapping: </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -225,7 +226,7 @@
 					</td>
 					<td style="text-align: center;">
 					  <img src="Part5/bump_2.png" width="400px"/>
-					  <figcaption>Top View of clothsim</figcaption>
+					  <figcaption>Top View of Cloth</figcaption>
 					</td>
 				  </tr>
 				  <tr>
@@ -269,7 +270,8 @@
 		<p>
 			For bump mapping, there is no difference in the sphere between changing the sphere's mesh coarseness since in the vertex file, we only use the surface normals.
 			For displacement mapping, there is a difference when the mesh coarseness is set to 16 since it looks more deformed and jagged while when the mesh 
-			coarseness is set to 128, it is more smooth. This is because in the vertex shader file, we are dependent on height scaling factor for the position and since we we edited the vertex shader for displacement mapping, the geometries are affecting the sphere when we adjust the mesh's coarseness.
+			coarseness is set to 128, it is more smooth. This is because in the vertex shader file, we are dependent on height scaling factor for the position and since we we edited the vertex shader for displacement mapping, 
+			the geometries are affecting the sphere when we adjust the mesh's coarseness. In 128 it looks smoother than 16 since 128 has more vertices to work with than 16 giving 16 a more blocky appearance. 
 		</p>
 		<div style = "text-align: center"> <b> <u> Mesh Coarseness: </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
