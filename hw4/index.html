@@ -172,7 +172,8 @@ For this question, I used chat-GPT to get a working implementation as well as to
 		<h2>Part 3: Handling collisions with other objects</h2>
 	For the plane intersection, we first look the last frame’s position, and the current frame’s position, and compute the signed different between them with   double d0 = dot(normal, pm.last_position - point) and double d1 = dot(normal, pm.position - point). We say that they have crossed if they different in sign, the mass has crossed from one side of the plane to the other. We then find a correct vector between the point and plane by solving for t when the plane equation is satisfied, and add this vector plus a small offset in the direction perpendicular to the plane. When then apply friction by scaling the correction with (1- friction), and update pm.position accordingly. Also, we forcefully push it out in the same manner if merely a single distance is less than zero. For the sphere intersection, we simply check if the euclidean distance between a point an the origin is within the radius, and if so, we recognize the point as being within the sphere. In this case, we push it out by computing the tangent point to the surface, where the correction is tangent - pm.position, and multiply the correction by (1-friction). Finally, we integrate collisions in cloth simulation by calling each object’s collide method for every point mass, and updating positions in the case of ac collision. 
 Upon implementing this part at first, there were case where the cloth was intersecting with the plane a little bit after being dropped thereon. I asked chat gpt for help, and it identified that I wasn’t pushing out objects after they had already been behind the plane (the case where merely d1<0). I learned that this is useful because this means that the cloth has ended partially behind a frame. 
-
+<p>
+For the differences in the below results, we can see that the ks = 500, vs. the ks = 5000, is more droopy and elongated; we can also see that the ks = 50000 is more stubby compared to ks = 5000. 
 		</p>
 		<div style = "text-align: center"> <b> <u> </u> </b> </div> 
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -208,7 +209,13 @@ Upon implementing this part at first, there were case where the cloth was inters
 	
 
 First, the code clears any hash map from before. We then compute a hash key based on which 3d box the point mass belongs to. We then point a pointer from this point mass to the bucket in the hashmap. To check collisions, we look up the bucket of a point mass, and checks whether points in its same bucket are within 2*thickness of each other, and push the points outward if this is the case. These push outs and averaged and then scaled down by the number of simulation steps. To integrate this, for each frame, after employing Verlet Integration, we call build_spatial_map to rebuild the hash of map positions, and then run self_collide for each mass.
-Upon implementing this at first, my cloth was still clipping itself, and self intersecting itself. I asked chat-gpt to implement this, and I then realized that my problem was that I wasn’t checking often enough whether there was a collision – checking multiple times per iteration fixed the problem. I learned that because the forces repel so quickly, they are pushed quicker than we check for a collision in some cases. 
+Upon implementing this at first, my cloth was still clipping itself, and self intersecting itself. I asked chat-gpt to implement this, and I then realized that my problem was that I wasn’t checking often enough whether there was a collision – checking multiple times per iteration fixed the problem. I learned that because the forces repel so quickly, they are pushed quicker than we check for a collision in some cases, so they collide without us doing anything about it. 
+
+<p>
+
+ With higher density, I noticed that the cloth stretches more and moves more quickly; for lower density, the cloth lands more gently on the plane and doesn't sag as much. The greater stretching with higher density is due to te greater momentum leading to greater colision forces (I used Chat-GPT to confirm that this interpretation is correct). With higher ks, the cloth resists stretching more and bounces less due to the greater stiffness of the springs (I likewise used Chat-GPT to confiorm the correctness of this interpretation as to why this is). 
+
+
 
 
 		</p>
